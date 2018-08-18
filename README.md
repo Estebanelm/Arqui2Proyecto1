@@ -1,0 +1,1 @@
+Proyecto 1 de Arquitectura de Computadores 2. Este proyecto consiste en 4 procesadores compartiendo una sola memoria principal con un cache local. Se busca evitar el problema de contencion de bus y mantener la coherencia de cache
