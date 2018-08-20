@@ -14,8 +14,7 @@
 #include <cstdlib>
 #include <cstdio>
 #include "Chip.h"
-#include "Bus.h"
-#include "SemaphoresSingleton.h"
+#include "SemaphoreSingleton.h"
 #include <unistd.h>
 
 #define NOPROCESSORS 4
@@ -27,12 +26,11 @@ using namespace std;
  */
 
 int main(int argc, char** argv) {
-    Bus * busMemoria = new Bus();
     Chip * chipsDisponibles[NOPROCESSORS];
     for (int i = 0; i < NOPROCESSORS; i++)
     {
-        chipsDisponibles[i] = new Chip(busMemoria, i);
-        sem_init(&SemaphoresSingleton::getInstance()->semaforoGeneralPeticiones[i], 0, 0);
+        chipsDisponibles[i] = new Chip(Bus::getInstance(), i);
+        sem_init(&SemaphoreSingleton::getInstance()->semaforoGeneralPeticiones[i], 0, 0);
         pthread_create(&chipsDisponibles[i]->chipThread, NULL, Chip::Trabajar, chipsDisponibles[i]);
     }
     while (1)
@@ -40,7 +38,7 @@ int main(int argc, char** argv) {
         printf("\nNuevo intento\n");
         for (int i = 0; i < NOPROCESSORS; i++)
         {
-            sem_post(&SemaphoresSingleton::getInstance()->semaforoGeneralPeticiones[i]);
+            sem_post(&SemaphoreSingleton::getInstance()->semaforoGeneralPeticiones[i]);
         }
         sleep(1);
     }

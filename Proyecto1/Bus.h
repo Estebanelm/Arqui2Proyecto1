@@ -16,10 +16,10 @@
 
 class Bus {
 public:
-    Bus();
-    virtual ~Bus();
+    static Bus * getInstance();
 private:
-
+    static Bus * instance;
+    Bus();
 };
 
 #endif /* BUS_H */

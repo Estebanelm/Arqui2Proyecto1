@@ -11,11 +11,11 @@
  * Created on August 19, 2018, 1:16 PM
  */
 
-#include "SemaphoresSingleton.h"
+#include "SemaphoreSingleton.h"
 
-SemaphoresSingleton* SemaphoresSingleton::instance = 0;
+SemaphoreSingleton* SemaphoreSingleton::instance = 0;
 
-SemaphoresSingleton::SemaphoresSingleton() {
+SemaphoreSingleton::SemaphoreSingleton() {
     semaforoGeneralPeticiones;
     for (int i = 0; i < NUMBEROFPROCESSORS ; i++)
     {
@@ -23,11 +23,11 @@ SemaphoresSingleton::SemaphoresSingleton() {
     }
 }
 
-SemaphoresSingleton * SemaphoresSingleton::getInstance()
+SemaphoreSingleton * SemaphoreSingleton::getInstance()
 {
     if (instance == 0)
     {
-        instance = new SemaphoresSingleton();
+        instance = new SemaphoreSingleton();
     }
     
     return instance;

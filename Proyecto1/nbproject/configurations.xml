@@ -10,7 +10,7 @@
       <itemPath>Control.h</itemPath>
       <itemPath>Memoria.h</itemPath>
       <itemPath>Procesador.h</itemPath>
-      <itemPath>SemaphoresSingleton.h</itemPath>
+      <itemPath>SemaphoreSingleton.h</itemPath>
     </logicalFolder>
     <logicalFolder name="ResourceFiles"
                    displayName="Resource Files"
@@ -25,7 +25,7 @@
       <itemPath>Control.cpp</itemPath>
       <itemPath>Memoria.cpp</itemPath>
       <itemPath>Procesador.cpp</itemPath>
-      <itemPath>SemaphoresSingleton.cpp</itemPath>
+      <itemPath>SemaphoreSingleton.cpp</itemPath>
       <itemPath>main.cpp</itemPath>
     </logicalFolder>
     <logicalFolder name="TestFiles"
@@ -77,9 +77,9 @@
       </item>
       <item path="Procesador.h" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="SemaphoresSingleton.cpp" ex="false" tool="1" flavor2="0">
+      <item path="SemaphoreSingleton.cpp" ex="false" tool="1" flavor2="0">
       </item>
-      <item path="SemaphoresSingleton.h" ex="false" tool="3" flavor2="0">
+      <item path="SemaphoreSingleton.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="main.cpp" ex="false" tool="1" flavor2="0">
       </item>
@@ -134,9 +134,9 @@
       </item>
       <item path="Procesador.h" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="SemaphoresSingleton.cpp" ex="false" tool="1" flavor2="0">
+      <item path="SemaphoreSingleton.cpp" ex="false" tool="1" flavor2="0">
       </item>
-      <item path="SemaphoresSingleton.h" ex="false" tool="3" flavor2="0">
+      <item path="SemaphoreSingleton.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="main.cpp" ex="false" tool="1" flavor2="0">
       </item>

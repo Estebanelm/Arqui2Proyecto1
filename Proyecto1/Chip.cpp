@@ -50,7 +50,7 @@ void* Chip::Trabajar(void* object)
     srand(time(0));
     while(1)
     {
-        sem_wait(&SemaphoresSingleton::getInstance()->semaforoGeneralPeticiones[id]);
+        sem_wait(&SemaphoreSingleton::getInstance()->semaforoGeneralPeticiones[id]);
         currentChip->procesador->EnviarPeticion();
     }
 }

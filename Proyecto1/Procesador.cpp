@@ -15,7 +15,7 @@
 
 Procesador::Procesador(Bus * busExistente, int id) {
     this->id = id;
-    this->cache = new Cache(busExistente);
+    this->cache = new Cache(busExistente, id);
 }
 
 Procesador::~Procesador() {
@@ -44,7 +44,10 @@ int Procesador::GetId() const {
 
 void Procesador::LeerBloque()
 {
+    int direccion = rand() % NUMEROBLOQUES;
     printf("Procesador %d: leer\n", id);
+    char * bloqueLeido = cache->LeerBloque(direccion);
+    printf("ID: %d. Se leyo el dato: %d%c en la direccion %d\n", id, bloqueLeido[0], bloqueLeido[2], direccion);
 }
 void Procesador::EscribirEnBloque()
 {

@@ -16,14 +16,19 @@
 
 #include "Bus.h"
 
+
+#define NOBLOQUES 16
+#define NOCOLUMNAS 3
+
 class Cache {
 public:
-    Cache(Bus * busExistente);
+    Cache(Bus * busExistente, int id);
     virtual ~Cache();
-    
+    char * LeerBloque(int direccion);
 private:
     Bus * bus;
-    char datos[16][2];
+    char datos[NOBLOQUES][NOCOLUMNAS];
+    int id;
 };
 
 #endif /* CACHE_H */

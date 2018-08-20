@@ -16,13 +16,14 @@
 
 #include <cstdio>
 #include "Cache.h"
-#include "Bus.h"
 #include <cstdlib>
 
 //Tipo de peticion
 #define PETILEER 0
 #define PETIESCRIBIR 1
 #define PETIPROCESAR 2
+
+#define NUMEROBLOQUES 16
 
 class Procesador {
 public:

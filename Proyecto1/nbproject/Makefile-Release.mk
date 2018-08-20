@@ -41,7 +41,7 @@ OBJECTFILES= \
 	${OBJECTDIR}/Control.o \
 	${OBJECTDIR}/Memoria.o \
 	${OBJECTDIR}/Procesador.o \
-	${OBJECTDIR}/SemaphoresSingleton.o \
+	${OBJECTDIR}/SemaphoreSingleton.o \
 	${OBJECTDIR}/main.o
 
 
@@ -99,10 +99,10 @@ ${OBJECTDIR}/Procesador.o: Procesador.cpp
 	${RM} "$@.d"
 	$(COMPILE.cc) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/Procesador.o Procesador.cpp
 
-${OBJECTDIR}/SemaphoresSingleton.o: SemaphoresSingleton.cpp
+${OBJECTDIR}/SemaphoreSingleton.o: SemaphoreSingleton.cpp
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} "$@.d"
-	$(COMPILE.cc) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/SemaphoresSingleton.o SemaphoresSingleton.cpp
+	$(COMPILE.cc) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/SemaphoreSingleton.o SemaphoreSingleton.cpp
 
 ${OBJECTDIR}/main.o: main.cpp
 	${MKDIR} -p ${OBJECTDIR}

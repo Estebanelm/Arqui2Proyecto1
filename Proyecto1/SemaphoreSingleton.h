@@ -18,13 +18,13 @@
 
 #define NUMBEROFPROCESSORS 4
 
-class SemaphoresSingleton {
+class SemaphoreSingleton {
 public:
-    static SemaphoresSingleton * getInstance();
+    static SemaphoreSingleton * getInstance();
     sem_t semaforoGeneralPeticiones [NUMBEROFPROCESSORS];
 private:
-    static SemaphoresSingleton * instance;
-    SemaphoresSingleton();
+    static SemaphoreSingleton * instance;
+    SemaphoreSingleton();
 };
 
 #endif /* SEMAPHORESSINGLETON_H */

@@ -13,9 +13,18 @@
 
 #include "Bus.h"
 
+Bus* Bus::instance = 0;
+
 Bus::Bus() {
 }
 
-Bus::~Bus() {
+Bus * Bus::getInstance()
+{
+    if (instance == 0)
+    {
+        instance = new Bus();
+    }
+    
+    return instance;
 }
 

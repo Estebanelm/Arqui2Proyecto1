@@ -16,7 +16,7 @@
 #include "Bus.h"
 #include "Control.h"
 #include "Procesador.h"
-#include "SemaphoresSingleton.h"
+#include "SemaphoreSingleton.h"
 #include <cstdio>
 #include <semaphore.h>
 #include <pthread.h>
