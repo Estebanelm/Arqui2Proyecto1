@@ -15,7 +15,7 @@
 #define CACHE_H
 
 #include "Bus.h"
-
+#include <string>
 
 #define NOBLOQUES 16
 #define NOCOLUMNAS 3
@@ -24,10 +24,10 @@ class Cache {
 public:
     Cache(Bus * busExistente, int id);
     virtual ~Cache();
-    char * LeerBloque(int direccion);
+    std::string LeerBloque(int direccion);
 private:
     Bus * bus;
-    char datos[NOBLOQUES][NOCOLUMNAS];
+    std::string * datos;
     int id;
 };
 

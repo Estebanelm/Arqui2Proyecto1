@@ -14,12 +14,17 @@
 #ifndef MEMORIA_H
 #define MEMORIA_H
 
+#include <string>
+#define NOBLOQUES 16
+#define NOCOLUMNAS 3
+
 class Memoria {
 public:
     static Memoria * getInstance();
+    std::string LeerDato(int direccion);
 private:
     Memoria();
-    char datos[16][2];
+    std::string * datos;
     static Memoria * instance;
 };
 

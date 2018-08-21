@@ -14,12 +14,21 @@
 #ifndef BUS_H
 #define BUS_H
 
+#define NOBLOQUES 16
+#define COLUMNAS 3
+#include <string>
+#include <vector>
+#include "Memoria.h"
+
 class Bus {
 public:
     static Bus * getInstance();
+    void newCache(std::string*);
+    std::string obtenerDeMemoria(int direccion);
 private:
     static Bus * instance;
     Bus();
+    std::vector<std::string*> cacheCollection;
 };
 
 #endif /* BUS_H */

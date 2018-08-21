@@ -24,7 +24,15 @@ Bus * Bus::getInstance()
     {
         instance = new Bus();
     }
-    
     return instance;
 }
 
+void Bus::newCache(std::string * cache)
+{
+    cacheCollection.push_back(cache);
+}
+
+std::string Bus::obtenerDeMemoria(int direccion)
+{
+    Memoria::getInstance()->LeerDato(direccion);
+}

@@ -16,12 +16,15 @@
 Memoria* Memoria::instance = 0;
 
 Memoria::Memoria() {
-    for (int i = 0; i < 16; i++)
+    std::string newDatos[NOBLOQUES];
+    datos = newDatos;
+    for (int i = 0; i < NOBLOQUES; i++)
     {
-        for (int k = 0; k < 2; k++)
+        for (int k = 0; k < NOCOLUMNAS-1; k++)
         {
-            datos[i][k] = 0;
+            datos[i].at(k) = 0;
         }
+        datos[i].at(NOCOLUMNAS-1) = 's';
     }
 }
 
@@ -33,4 +36,9 @@ Memoria * Memoria::getInstance()
     }
     
     return instance;
+}
+
+std::string Memoria::LeerDato(int direccion)
+{
+    return datos[direccion];
 }

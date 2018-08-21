@@ -15,27 +15,30 @@
 
 Cache::Cache(Bus * busExistente, int id) {
     bus = busExistente;
+    std::string newDatos[NOBLOQUES];
+    datos = newDatos;
     for (int i = 0; i < NOBLOQUES; i++)
     {
         for (int k = 0; k < NOCOLUMNAS-1; k++)
         {
-            datos[i][k] = 0;
+            datos[i].at(k) = 0;
         }
-        datos[i][NOCOLUMNAS-1] = 's';
+        datos[i].at(NOCOLUMNAS-1) = 's';
     }
     this->id = id;
+    bus->newCache(datos);
 }
 
 Cache::~Cache() {
 }
 
-char * Cache::LeerBloque(int direccion)
+std::string Cache::LeerBloque(int direccion)
 {
-    if (datos[direccion][NOCOLUMNAS-1] == 's' || datos[direccion][NOCOLUMNAS-1] == 'm')
+    if (datos[direccion].at(NOCOLUMNAS-1) == 's' || datos[direccion].at(NOCOLUMNAS-1) == 'm')
     {
         return datos[direccion];
     }
-    //invalid or modified, ask control to do something
-    datos[direccion][NOCOLUMNAS-1] == 'i';
+    datos[direccion] = bus->obtenerDeMemoria(direccion);
+    datos[direccion].at(NOCOLUMNAS-1) == 's';
     return datos[direccion];
 }

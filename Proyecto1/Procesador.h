@@ -15,6 +15,7 @@
 #define PROCESADOR_H
 
 #include <cstdio>
+#include <string>
 #include "Cache.h"
 #include <cstdlib>
 
