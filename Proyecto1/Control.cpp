@@ -14,8 +14,18 @@
 #include "Control.h"
 
 Control::Control() {
+    bus = Bus::getInstance();
 }
 
 Control::~Control() {
 }
 
+std::string Control::ObtenerDeMemoria(int direccion, int id)
+{
+    return bus->obtenerDeMemoria(direccion, id);
+}
+
+void Control::EscribirEnMemoria(int direccion, std::string dato)
+{
+    
+}

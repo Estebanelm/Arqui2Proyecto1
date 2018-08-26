@@ -18,6 +18,7 @@
 #include <string>
 #include "Cache.h"
 #include <cstdlib>
+#include <string>
 
 //Tipo de peticion
 #define PETILEER 0

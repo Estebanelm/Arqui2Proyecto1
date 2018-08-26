@@ -16,15 +16,12 @@
 Memoria* Memoria::instance = 0;
 
 Memoria::Memoria() {
-    std::string newDatos[NOBLOQUES];
-    datos = newDatos;
     for (int i = 0; i < NOBLOQUES; i++)
     {
         for (int k = 0; k < NOCOLUMNAS-1; k++)
         {
-            datos[i].at(k) = 0;
+            datos[i].push_back(0);
         }
-        datos[i].at(NOCOLUMNAS-1) = 's';
     }
 }
 

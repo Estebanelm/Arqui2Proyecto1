@@ -16,6 +16,8 @@
 
 #include "Bus.h"
 #include <string>
+#include <cstdio>
+#include "Control.h"
 
 #define NOBLOQUES 16
 #define NOCOLUMNAS 3
@@ -25,10 +27,14 @@ public:
     Cache(Bus * busExistente, int id);
     virtual ~Cache();
     std::string LeerBloque(int direccion);
+    Control * GetControl();
+    void SetControl(Control* control);
+    void EscribirBloque(int direccion, std::string dato);
 private:
     Bus * bus;
-    std::string * datos;
+    std::string datos[NOBLOQUES];
     int id;
+    Control * control;
 };
 
 #endif /* CACHE_H */

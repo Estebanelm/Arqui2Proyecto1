@@ -24,11 +24,12 @@ class Bus {
 public:
     static Bus * getInstance();
     void newCache(std::string*);
-    std::string obtenerDeMemoria(int direccion);
+    std::string obtenerDeMemoria(int direccion, int id);
 private:
     static Bus * instance;
     Bus();
     std::vector<std::string*> cacheCollection;
+    Memoria * memoria;
 };
 
 #endif /* BUS_H */

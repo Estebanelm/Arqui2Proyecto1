@@ -14,12 +14,18 @@
 #ifndef CONTROL_H
 #define CONTROL_H
 
+#include "Bus.h"
+#include <string>
+
 class Control {
 public:
     Control();
     virtual ~Control();
+    
+    std::string ObtenerDeMemoria(int direccion, int id);
+    void EscribirEnMemoria(int direccion, std::string dato);
 private:
-
+    Bus * bus;
 };
 
 #endif /* CONTROL_H */

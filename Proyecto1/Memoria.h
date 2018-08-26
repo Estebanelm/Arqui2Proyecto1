@@ -24,7 +24,7 @@ public:
     std::string LeerDato(int direccion);
 private:
     Memoria();
-    std::string * datos;
+    std::string datos[NOBLOQUES];
     static Memoria * instance;
 };
 

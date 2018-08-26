@@ -50,7 +50,7 @@
       </toolsSet>
       <compileType>
         <ccTool>
-          <commandLine>-fopenmp</commandLine>
+          <commandLine>-fopenmp -std=c++0x</commandLine>
         </ccTool>
       </compileType>
       <item path="Bus.cpp" ex="false" tool="1" flavor2="0">

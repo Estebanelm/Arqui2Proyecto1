@@ -16,6 +16,7 @@
 Bus* Bus::instance = 0;
 
 Bus::Bus() {
+    memoria = Memoria::getInstance();
 }
 
 Bus * Bus::getInstance()
@@ -32,7 +33,7 @@ void Bus::newCache(std::string * cache)
     cacheCollection.push_back(cache);
 }
 
-std::string Bus::obtenerDeMemoria(int direccion)
+std::string Bus::obtenerDeMemoria(int direccion, int id)
 {
     Memoria::getInstance()->LeerDato(direccion);
 }

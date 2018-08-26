@@ -47,7 +47,7 @@ void Procesador::LeerBloque()
     int direccion = rand() % NUMEROBLOQUES;
     printf("Procesador %d: leer\n", id);
     std::string bloqueLeido = cache->LeerBloque(direccion);
-    printf("ID: %d. Se leyo el dato: %d%c en la direccion %d\n", id, bloqueLeido[0], bloqueLeido[2], direccion);
+    printf("ID: %d. Se leyo el dato: %d%c en la direccion %d\n", id, bloqueLeido.at(0), bloqueLeido.at(2), direccion);
 }
 void Procesador::EscribirEnBloque()
 {

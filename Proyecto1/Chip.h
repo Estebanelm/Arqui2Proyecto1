@@ -14,7 +14,6 @@
 #ifndef CHIP_H
 #define CHIP_H
 #include "Bus.h"
-#include "Control.h"
 #include "Procesador.h"
 #include "SemaphoreSingleton.h"
 #include <cstdio>
@@ -38,7 +37,6 @@ public:
     pthread_t chipThread;
 private:
     Procesador * procesador;
-    Control * control;
     int id;
 };
 

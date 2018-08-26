@@ -15,24 +15,14 @@
 
 Chip::Chip() {
     procesador = new Procesador(NULL, 0);
-    control = new Control();
 }
 
 Chip::Chip(Bus * busExistente, int id){
     procesador = new Procesador(busExistente, id);
-    control = new Control();
     this->id = id;
 }
 
 Chip::~Chip() {
-}
-
-void Chip::SetControl(Control* control) {
-    this->control = control;
-}
-
-Control* Chip::GetControl() {
-    return control;
 }
 
 void Chip::SetProcesador(Procesador* procesador) {
