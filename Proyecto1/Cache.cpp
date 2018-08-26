@@ -22,7 +22,7 @@ Cache::Cache(Bus * busExistente, int id) {
             datos[i].push_back(0);
         }
         datos[i].append("s");
-        datos[i].push_back(i);
+        datos[i].append(std::to_string(i));
     }
     this->id = id;
     bus->newCache(datos);
@@ -40,20 +40,27 @@ std::string Cache::LeerBloque(int direccion)
     }
     else
     {
-        datos[direccion] = control->ObtenerDeMemoria(direccion, id);
+        std::string datoObtenido = control->ObtenerDeMemoria(direccion, id);
+        if (datoObtenido.compare("invalido")==0)
+        {
+            return datoObtenido;
+        }
+        datos[direccion] = datoObtenido;
         datos[direccion].append("s" + direccion);
     }
     return datos[direccion];
 }
 
-void Cache::EscribirBloque(int direccion, std::string dato)
+bool Cache::EscribirBloque(int direccion, std::string dato)
 {
-    datos[direccion] = dato;
-    datos[direccion].append("m");
-    datos[direccion].push_back(direccion);
-    std::string asd = datos[direccion].substr(3);
-    std::string asd1 = datos[direccion].substr(0,2);
-    control->EscribirEnMemoria(std::stoi(datos[direccion].substr(3)), datos[direccion].substr(0,3));
+    if (control->EscribirEnMemoria(direccion, dato, id))
+    {
+        datos[direccion] = dato;
+        datos[direccion].append("m");
+        datos[direccion].push_back(direccion);
+        return true;
+    }
+    return false;
 }
 
 void Cache::SetControl(Control* control) {

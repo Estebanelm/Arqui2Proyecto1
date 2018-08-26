@@ -34,14 +34,18 @@ public:
     void EnviarPeticion();
     void SetId(int id);
     void CicloProcesamiento();
-    void LeerBloque();
-    void EscribirEnBloque();
+    bool LeerBloque(int direccion);
+    bool EscribirEnBloque(int direccion, std::string dato);
     int GetId() const;
     void SetCache(Cache* cache);
     Cache* GetCache();
 private:
     int id;
     Cache * cache;
+    int direccionAUsar;
+    std::string datoAEscribir;
+    int solicitudARealizar;
+    bool repetirInstruccion;
 };
 
 #endif /* PROCESADOR_H */

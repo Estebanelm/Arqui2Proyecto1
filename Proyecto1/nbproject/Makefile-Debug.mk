@@ -36,6 +36,7 @@ OBJECTDIR=${CND_BUILDDIR}/${CND_CONF}/${CND_PLATFORM}
 # Object Files
 OBJECTFILES= \
 	${OBJECTDIR}/Bus.o \
+	${OBJECTDIR}/BusBuffer.o \
 	${OBJECTDIR}/Cache.o \
 	${OBJECTDIR}/Chip.o \
 	${OBJECTDIR}/Control.o \
@@ -73,6 +74,11 @@ ${OBJECTDIR}/Bus.o: Bus.cpp
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} "$@.d"
 	$(COMPILE.cc) -g -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/Bus.o Bus.cpp
+
+${OBJECTDIR}/BusBuffer.o: BusBuffer.cpp
+	${MKDIR} -p ${OBJECTDIR}
+	${RM} "$@.d"
+	$(COMPILE.cc) -g -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/BusBuffer.o BusBuffer.cpp
 
 ${OBJECTDIR}/Cache.o: Cache.cpp
 	${MKDIR} -p ${OBJECTDIR}

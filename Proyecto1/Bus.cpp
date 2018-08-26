@@ -35,5 +35,25 @@ void Bus::newCache(std::string * cache)
 
 std::string Bus::obtenerDeMemoria(int direccion, int id)
 {
-    Memoria::getInstance()->LeerDato(direccion);
+    memoria->LeerDato(direccion);
+}
+
+void Bus::EscribirEnMemoria(int direccion, std::string dato)
+{
+    memoria->EscribirDato(direccion, dato);
+}
+
+void Bus::InvalidarDatoEnCaches(std::string tag)
+{
+    for (int i = 0; i < cacheCollection.size() ; i++)
+    {
+        std::string * datos = cacheCollection.at(i);
+        for (int k=0; k<16; k++)
+        {
+            if (datos[k].substr(3).compare(tag)==0 && datos[k].at(2)=='m')
+            {
+                datos[k].at(2) = 'i';
+            }
+        }
+    }
 }

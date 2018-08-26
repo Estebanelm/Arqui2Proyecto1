@@ -22,6 +22,7 @@ class Memoria {
 public:
     static Memoria * getInstance();
     std::string LeerDato(int direccion);
+    void EscribirDato(int direccion, std::string dato);
 private:
     Memoria();
     std::string datos[NOBLOQUES];

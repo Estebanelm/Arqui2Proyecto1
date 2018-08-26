@@ -15,6 +15,7 @@
 #define CONTROL_H
 
 #include "Bus.h"
+#include "BusBuffer.h"
 #include <string>
 
 class Control {
@@ -23,7 +24,7 @@ public:
     virtual ~Control();
     
     std::string ObtenerDeMemoria(int direccion, int id);
-    void EscribirEnMemoria(int direccion, std::string dato);
+    bool EscribirEnMemoria(int direccion, std::string dato, int id);
 private:
     Bus * bus;
 };

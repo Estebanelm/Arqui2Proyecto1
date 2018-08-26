@@ -39,3 +39,8 @@ std::string Memoria::LeerDato(int direccion)
 {
     return datos[direccion];
 }
+
+void Memoria::EscribirDato(int direccion, std::string dato)
+{
+    datos[direccion] = dato;
+}

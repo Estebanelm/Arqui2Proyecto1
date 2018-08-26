@@ -29,7 +29,7 @@ public:
     std::string LeerBloque(int direccion);
     Control * GetControl();
     void SetControl(Control* control);
-    void EscribirBloque(int direccion, std::string dato);
+    bool EscribirBloque(int direccion, std::string dato);
 private:
     Bus * bus;
     std::string datos[NOBLOQUES];

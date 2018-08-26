@@ -16,6 +16,7 @@
 Procesador::Procesador(Bus * busExistente, int id) {
     this->id = id;
     this->cache = new Cache(busExistente, id);
+    this->repetirInstruccion = false;
 }
 
 Procesador::~Procesador() {
@@ -23,16 +24,23 @@ Procesador::~Procesador() {
 
 void Procesador::EnviarPeticion()
 {
-    int tipoDePeticion = rand() % 3;
-    if (tipoDePeticion == PETILEER)
+    if (!repetirInstruccion)
     {
-        LeerBloque();
+        direccionAUsar = rand() % NUMEROBLOQUES;
+        datoAEscribir = "";
+        datoAEscribir.push_back(rand() % 10);
+        datoAEscribir.push_back(rand() % 9);
+        solicitudARealizar = rand() % 3;
     }
-    if (tipoDePeticion == PETIESCRIBIR)
+    if (solicitudARealizar == PETILEER)
     {
-        EscribirEnBloque();
+        repetirInstruccion = LeerBloque(direccionAUsar);
     }
-    if (tipoDePeticion == PETIPROCESAR)
+    if (solicitudARealizar == PETIESCRIBIR)
+    {
+        repetirInstruccion = EscribirEnBloque(direccionAUsar, datoAEscribir);
+    }
+    if (solicitudARealizar == PETIPROCESAR)
     {
         CicloProcesamiento();
     }
@@ -42,16 +50,28 @@ int Procesador::GetId() const {
     return id;
 }
 
-void Procesador::LeerBloque()
+bool Procesador::LeerBloque(int direccion)
 {
-    int direccion = rand() % NUMEROBLOQUES;
     printf("Procesador %d: leer\n", id);
     std::string bloqueLeido = cache->LeerBloque(direccion);
-    printf("ID: %d. Se leyo el dato: %d%c en la direccion %d\n", id, bloqueLeido.at(0), bloqueLeido.at(2), direccion);
+    if (bloqueLeido.compare("invalido")==0)
+    {
+        printf("ID: %d. Se espera para leer dato en la direccion %d\n", id, direccion);
+        return true;
+    }
+    printf("ID: %d. Se leyo el dato: %d%d en la direccion %d\n", id, bloqueLeido.at(0), bloqueLeido.at(1), direccion);
+    return false;
 }
-void Procesador::EscribirEnBloque()
+bool Procesador::EscribirEnBloque(int direccion, std::string dato)
 {
     printf("Procesador %d: escribir\n", id);
+    if (!cache->EscribirBloque(direccion, dato))
+    {
+        printf("ID: %d. Se espera para escribir el dato %d%d en la direccion %d\n", id, dato.at(0), dato.at(1), direccion);
+        return true;
+    }
+    printf("ID: %d. Escribe el dato %d%d en la direccion %d\n", id, dato.at(0), dato.at(1), direccion);
+    return false;
 }
 
 void Procesador::CicloProcesamiento()
