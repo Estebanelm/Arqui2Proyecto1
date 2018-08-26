@@ -23,6 +23,7 @@ public:
     static BusBuffer * GetInstance();
     std::vector<int> procesorIdFIFO;
     pthread_mutex_t mutex;
+    bool sinUso;
 private:
     BusBuffer();
     static BusBuffer * instance;

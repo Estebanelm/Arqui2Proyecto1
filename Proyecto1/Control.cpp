@@ -15,6 +15,7 @@
 
 Control::Control() {
     bus = Bus::getInstance();
+    esperandoBus = false;
 }
 
 Control::~Control() {
@@ -23,11 +24,16 @@ Control::~Control() {
 std::string Control::ObtenerDeMemoria(int direccion, int id)
 {
     pthread_mutex_lock(&BusBuffer::GetInstance()->mutex);
-    BusBuffer::GetInstance()->procesorIdFIFO.push_back(id);
-    pthread_mutex_unlock(&BusBuffer::GetInstance()->mutex);
-    int firstId = BusBuffer::GetInstance()->procesorIdFIFO.front();
-    if (BusBuffer::GetInstance()->procesorIdFIFO.front() == id)
+    if (!esperandoBus)
     {
+        BusBuffer::GetInstance()->procesorIdFIFO.push_back(id);
+        esperandoBus = true;
+    }
+    pthread_mutex_unlock(&BusBuffer::GetInstance()->mutex);
+    if (BusBuffer::GetInstance()->procesorIdFIFO.front() == id && BusBuffer::GetInstance()->sinUso)
+    {
+        esperandoBus = false;
+        BusBuffer::GetInstance()->sinUso = false;
         BusBuffer::GetInstance()->procesorIdFIFO.erase(BusBuffer::GetInstance()->procesorIdFIFO.begin());
         return bus->obtenerDeMemoria(direccion, id);
     }
@@ -40,11 +46,16 @@ std::string Control::ObtenerDeMemoria(int direccion, int id)
 bool Control::EscribirEnMemoria(int direccion, std::string dato, int id)
 {
     pthread_mutex_lock(&BusBuffer::GetInstance()->mutex);
-    BusBuffer::GetInstance()->procesorIdFIFO.push_back(id);
-    pthread_mutex_unlock(&BusBuffer::GetInstance()->mutex);
-    int firstId = BusBuffer::GetInstance()->procesorIdFIFO.front();
-    if (BusBuffer::GetInstance()->procesorIdFIFO.front() == id)
+    if (!esperandoBus)
     {
+        BusBuffer::GetInstance()->procesorIdFIFO.push_back(id);
+        esperandoBus = true;
+    }
+    pthread_mutex_unlock(&BusBuffer::GetInstance()->mutex);
+    if (BusBuffer::GetInstance()->procesorIdFIFO.front() == id && BusBuffer::GetInstance()->sinUso)
+    {
+        esperandoBus = false;
+        BusBuffer::GetInstance()->sinUso = false;
         BusBuffer::GetInstance()->procesorIdFIFO.erase(BusBuffer::GetInstance()->procesorIdFIFO.begin());
         bus->InvalidarDatoEnCaches(std::to_string(direccion));
         bus->EscribirEnMemoria(direccion, dato);

@@ -17,6 +17,10 @@
 #include "SemaphoreSingleton.h"
 #include <unistd.h>
 #include <string>
+#include <iostream>
+#include <termios.h>
+#include <unistd.h>
+#include "BusBuffer.h"
 
 #define NOPROCESSORS 4
 
@@ -26,13 +30,35 @@ using namespace std;
  * 
  */
 
+int getch(void)
+{
+	struct termios oldt, newt;
+	int ch;
+
+	tcgetattr(STDIN_FILENO, &oldt);
+	newt = oldt;
+	newt.c_lflag &= ~(ICANON | ECHO);
+	tcsetattr(STDIN_FILENO, TCSANOW, &newt);
+	ch = getchar();
+	tcsetattr(STDIN_FILENO, TCSANOW, &oldt);
+
+	return ch;
+}
+
 int main(int argc, char** argv) {
     Chip * chipsDisponibles[NOPROCESSORS];
 //    Chip * newChip = new Chip(Bus::getInstance(), 1);
 //    std::string asd1 = "";
 //    asd1.push_back(0);
 //    asd1.push_back(5);
-//    newChip->GetProcesador()->GetCache()->EscribirBloque(1, asd1);
+//    BusBuffer::GetInstance()->procesorIdFIFO.push_back(2);
+//    newChip->GetProcesador()->EscribirEnBloque(1, asd1);
+//    printf("Cola contencion:\n");
+//        for(int k = 0; k<BusBuffer::GetInstance()->procesorIdFIFO.size(); k++)
+//        {
+//            printf("\t| %d |\n", BusBuffer::GetInstance()->procesorIdFIFO.at(k));
+//        }
+    //newChip->GetProcesador()->GetCache()->EscribirBloque(1, asd1);
     for (int i = 0; i < NOPROCESSORS; i++)
     {
         chipsDisponibles[i] = new Chip(Bus::getInstance(), i);
@@ -42,11 +68,19 @@ int main(int argc, char** argv) {
     while (1)
     {
         printf("\nNuevo intento\n");
+        BusBuffer::GetInstance()->sinUso = true;
         for (int i = 0; i < NOPROCESSORS; i++)
         {
             sem_post(&SemaphoreSingleton::getInstance()->semaforoGeneralPeticiones[i]);
         }
-        sleep(1);
+        usleep(250000);
+        printf("Cola contencion:\n");
+        for(int k = 0; k<BusBuffer::GetInstance()->procesorIdFIFO.size(); k++)
+        {
+            printf("\t| %d |\n", BusBuffer::GetInstance()->procesorIdFIFO.at(k));
+        }
+        getch();
+        //sleep(1);
     }
     
     void *status;

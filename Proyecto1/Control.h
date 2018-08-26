@@ -27,6 +27,7 @@ public:
     bool EscribirEnMemoria(int direccion, std::string dato, int id);
 private:
     Bus * bus;
+    bool esperandoBus;
 };
 
 #endif /* CONTROL_H */
