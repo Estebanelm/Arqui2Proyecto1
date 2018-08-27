@@ -39,6 +39,10 @@ public:
     int GetId() const;
     void SetCache(Cache* cache);
     Cache* GetCache();
+    bool IsRepetirInstruccion();
+    int GetSolicitudARealizar();
+    std::string GetDatoAEscribir();
+    int GetDireccionAUsar();
 private:
     int id;
     Cache * cache;

@@ -21,14 +21,22 @@
 #include <termios.h>
 #include <unistd.h>
 #include "BusBuffer.h"
+#include "Bus.h"
 
 #define NOPROCESSORS 4
+
+//Tipo de peticion
+#define PETILEER 0
+#define PETIESCRIBIR 1
+#define PETIPROCESAR 2
 
 
 using namespace std;
 /*
  * 
  */
+
+Chip * chipsDisponibles[NOPROCESSORS];
 
 int getch(void)
 {
@@ -45,20 +53,61 @@ int getch(void)
 	return ch;
 }
 
+void imprimirEstado()
+{
+    for (int i = 0; i<NOPROCESSORS; i++)
+    {
+        int peticionDeProcesador = chipsDisponibles[i]->GetProcesador()->GetSolicitudARealizar();
+        if (peticionDeProcesador == PETILEER)
+        {
+            printf("Procesador %d: leer direccion %d\n", chipsDisponibles[i]->GetId(), chipsDisponibles[i]->GetProcesador()->GetDireccionAUsar());
+        }
+        if (peticionDeProcesador == PETIESCRIBIR)
+        {
+            printf("Procesador %d: escribir dato %d%d en direccion %d\n", chipsDisponibles[i]->GetId(), chipsDisponibles[i]->GetProcesador()->GetDatoAEscribir().at(0), chipsDisponibles[i]->GetProcesador()->GetDatoAEscribir().at(1),  chipsDisponibles[i]->GetProcesador()->GetDireccionAUsar());
+        }
+        if (peticionDeProcesador == PETIPROCESAR)
+        {
+            printf("Procesador %d: procesar\n", chipsDisponibles[i]->GetId());
+        }
+    }
+    printf("\nCache #0\t\t\t\t\tCache #1\t\t\t\t\tCache#2\t\t\t\t\t\tCache#3\n");
+    printf("Add  Tag  Dato  S\t\t\t\tAdd  Tag  Dato  S\t\t\t\tAdd  Tag  Dato  S\t\t\t\tAdd  Tag  Dato  S\n");
+    for (int i = 0; i<16; i++)
+    {
+        std::string * cache0 = Bus::getInstance()->GetCacheCollection().at(0);
+        std::string * cache1 = Bus::getInstance()->GetCacheCollection().at(1);
+        std::string * cache2 = Bus::getInstance()->GetCacheCollection().at(2);
+        std::string * cache3 = Bus::getInstance()->GetCacheCollection().at(3);
+        if (i<10)
+        {
+            printf("%d    %d    %d%d    %c\t\t\t\t%d    %d    %d%d    %c\t\t\t\t%d    %d    %d%d    %c\t\t\t\t%d    %d    %d%d    %c\n", i, std::stoi(cache0[i].substr(3)), cache0[i].at(0), cache0[i].at(1), cache0[i].at(2), i, std::stoi(cache1[i].substr(3)), cache1[i].at(0), cache1[i].at(1), cache1[i].at(2), i, std::stoi(cache2[i].substr(3)), cache2[i].at(0), cache2[i].at(1), cache2[i].at(2), i, std::stoi(cache3[i].substr(3)), cache3[i].at(0), cache3[i].at(1), cache3[i].at(2));
+        }
+        else
+        {
+            printf("%d   %d   %d%d    %c\t\t\t\t%d   %d   %d%d    %c\t\t\t\t%d   %d   %d%d    %c\t\t\t\t%d   %d   %d%d    %c\n", i, std::stoi(cache0[i].substr(3)), cache0[i].at(0), cache0[i].at(1), cache0[i].at(2), i, std::stoi(cache1[i].substr(3)), cache1[i].at(0), cache1[i].at(1), cache1[i].at(2), i, std::stoi(cache2[i].substr(3)), cache2[i].at(0), cache2[i].at(1), cache2[i].at(2), i, std::stoi(cache3[i].substr(3)), cache3[i].at(0), cache3[i].at(1), cache3[i].at(2));
+        }
+    }
+    printf("\nMemoria\n");
+    printf("Add  Dato\n");
+    for (int i = 0; i<16; i++)
+    {
+        if (i<10)
+            printf("%d    %d%d\n", i, Memoria::getInstance()->GetDatos()[i].at(0), Memoria::getInstance()->GetDatos()[i].at(1));
+        else
+            printf("%d   %d%d\n", i, Memoria::getInstance()->GetDatos()[i].at(0), Memoria::getInstance()->GetDatos()[i].at(1));
+    }
+    
+    printf("Cola contencion:\n");
+    for(int k = 0; k<BusBuffer::GetInstance()->procesorIdFIFO.size(); k++)
+    {
+        printf("| %d | ", BusBuffer::GetInstance()->procesorIdFIFO.at(k));
+    }
+    printf("\n");
+}
+
 int main(int argc, char** argv) {
-    Chip * chipsDisponibles[NOPROCESSORS];
-//    Chip * newChip = new Chip(Bus::getInstance(), 1);
-//    std::string asd1 = "";
-//    asd1.push_back(0);
-//    asd1.push_back(5);
-//    BusBuffer::GetInstance()->procesorIdFIFO.push_back(2);
-//    newChip->GetProcesador()->EscribirEnBloque(1, asd1);
-//    printf("Cola contencion:\n");
-//        for(int k = 0; k<BusBuffer::GetInstance()->procesorIdFIFO.size(); k++)
-//        {
-//            printf("\t| %d |\n", BusBuffer::GetInstance()->procesorIdFIFO.at(k));
-//        }
-    //newChip->GetProcesador()->GetCache()->EscribirBloque(1, asd1);
+    int NumeroCiclo = 0;
     for (int i = 0; i < NOPROCESSORS; i++)
     {
         chipsDisponibles[i] = new Chip(Bus::getInstance(), i);
@@ -67,18 +116,15 @@ int main(int argc, char** argv) {
     }
     while (1)
     {
-        printf("\nNuevo intento\n");
+        NumeroCiclo++;
+        printf("\nCiclo #%d\n", NumeroCiclo);
         BusBuffer::GetInstance()->sinUso = true;
         for (int i = 0; i < NOPROCESSORS; i++)
         {
             sem_post(&SemaphoreSingleton::getInstance()->semaforoGeneralPeticiones[i]);
         }
-        usleep(250000);
-        printf("Cola contencion:\n");
-        for(int k = 0; k<BusBuffer::GetInstance()->procesorIdFIFO.size(); k++)
-        {
-            printf("\t| %d |\n", BusBuffer::GetInstance()->procesorIdFIFO.at(k));
-        }
+        usleep(100000);
+        imprimirEstado();
         getch();
         //sleep(1);
     }

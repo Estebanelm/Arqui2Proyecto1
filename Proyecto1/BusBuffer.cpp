@@ -17,6 +17,7 @@ BusBuffer* BusBuffer::instance = 0;
 
 BusBuffer::BusBuffer() {
     mutex = PTHREAD_MUTEX_INITIALIZER;
+    sinUso = true;
 }
 
 BusBuffer::~BusBuffer() {

@@ -24,9 +24,10 @@ class Bus {
 public:
     static Bus * getInstance();
     void newCache(std::string*);
-    std::string obtenerDeMemoria(int direccion, int id);
-    void InvalidarDatoEnCaches(std::string tag);
+    std::string obtenerDeMemoria(int direccion);
+    void InvalidarDatoEnCaches(std::string tag, int id);
     void EscribirEnMemoria(int direccion, std::string dato);
+    std::vector<std::string*> GetCacheCollection();
 private:
     static Bus * instance;
     Bus();

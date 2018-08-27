@@ -35,7 +35,7 @@ std::string Control::ObtenerDeMemoria(int direccion, int id)
         esperandoBus = false;
         BusBuffer::GetInstance()->sinUso = false;
         BusBuffer::GetInstance()->procesorIdFIFO.erase(BusBuffer::GetInstance()->procesorIdFIFO.begin());
-        return bus->obtenerDeMemoria(direccion, id);
+        return bus->obtenerDeMemoria(direccion);
     }
     else
     {
@@ -57,7 +57,7 @@ bool Control::EscribirEnMemoria(int direccion, std::string dato, int id)
         esperandoBus = false;
         BusBuffer::GetInstance()->sinUso = false;
         BusBuffer::GetInstance()->procesorIdFIFO.erase(BusBuffer::GetInstance()->procesorIdFIFO.begin());
-        bus->InvalidarDatoEnCaches(std::to_string(direccion));
+        bus->InvalidarDatoEnCaches(std::to_string(direccion), id);
         bus->EscribirEnMemoria(direccion, dato);
         return true;
     }

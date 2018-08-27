@@ -44,3 +44,8 @@ void Memoria::EscribirDato(int direccion, std::string dato)
 {
     datos[direccion] = dato;
 }
+
+std::string * Memoria::GetDatos()
+{
+    return datos;
+}

@@ -52,31 +52,31 @@ int Procesador::GetId() const {
 
 bool Procesador::LeerBloque(int direccion)
 {
-    printf("Procesador %d: leer\n", id);
+    //printf("Procesador %d: leer\n", id);
     std::string bloqueLeido = cache->LeerBloque(direccion);
     if (bloqueLeido.compare("invalido")==0)
     {
-        printf("ID: %d. Se espera para leer dato en la direccion %d\n", id, direccion);
+        //printf("ID: %d. Se espera para leer dato en la direccion %d\n", id, direccion);
         return true;
     }
-    printf("ID: %d. Se leyo el dato: %d%d en la direccion %d\n", id, bloqueLeido.at(0), bloqueLeido.at(1), direccion);
+    //printf("ID: %d. Se leyo el dato: %d%d en la direccion %d\n", id, bloqueLeido.at(0), bloqueLeido.at(1), direccion);
     return false;
 }
 bool Procesador::EscribirEnBloque(int direccion, std::string dato)
 {
-    printf("Procesador %d: escribir\n", id);
+    //printf("Procesador %d: escribir\n", id);
     if (!cache->EscribirBloque(direccion, dato))
     {
-        printf("ID: %d. Se espera para escribir el dato %d%d en la direccion %d\n", id, dato.at(0), dato.at(1), direccion);
+        //printf("ID: %d. Se espera para escribir el dato %d%d en la direccion %d\n", id, dato.at(0), dato.at(1), direccion);
         return true;
     }
-    printf("ID: %d. Escribe el dato %d%d en la direccion %d\n", id, dato.at(0), dato.at(1), direccion);
+    //printf("ID: %d. Escribe el dato %d%d en la direccion %d\n", id, dato.at(0), dato.at(1), direccion);
     return false;
 }
 
 void Procesador::CicloProcesamiento()
 {
-    printf("Procesador %d: procesar\n", id);
+    //printf("Procesador %d: procesar\n", id);
 }
 
 void Procesador::SetCache(Cache* cache) {
@@ -85,4 +85,20 @@ void Procesador::SetCache(Cache* cache) {
 
 Cache* Procesador::GetCache() {
     return cache;
+}
+
+bool Procesador::IsRepetirInstruccion(){
+    return repetirInstruccion;
+}
+
+int Procesador::GetSolicitudARealizar(){
+    return solicitudARealizar;
+}
+
+std::string Procesador::GetDatoAEscribir(){
+    return datoAEscribir;
+}
+
+int Procesador::GetDireccionAUsar(){
+    return direccionAUsar;
 }

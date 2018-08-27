@@ -34,8 +34,13 @@ Cache::~Cache() {
 
 std::string Cache::LeerBloque(int direccion)
 {
-    if (datos[direccion].at(NOCOLUMNAS-1) == 's' || datos[direccion].at(NOCOLUMNAS-1) == 'm')
+    if (datos[direccion].at(NOCOLUMNAS-1) == 's')
     {
+        return datos[direccion];
+    }
+    else if (datos[direccion].at(NOCOLUMNAS-1) == 'm')
+    {
+        datos[direccion].at(NOCOLUMNAS-1) = 's';
         return datos[direccion];
     }
     else
@@ -46,7 +51,8 @@ std::string Cache::LeerBloque(int direccion)
             return datoObtenido;
         }
         datos[direccion] = datoObtenido;
-        datos[direccion].append("s" + direccion);
+        datos[direccion].append("s");
+        datos[direccion].append(std::to_string(direccion));
     }
     return datos[direccion];
 }
@@ -57,7 +63,7 @@ bool Cache::EscribirBloque(int direccion, std::string dato)
     {
         datos[direccion] = dato;
         datos[direccion].append("m");
-        datos[direccion].push_back(direccion);
+        datos[direccion].append(std::to_string(direccion));
         return true;
     }
     return false;

@@ -33,9 +33,9 @@ void Bus::newCache(std::string * cache)
     cacheCollection.push_back(cache);
 }
 
-std::string Bus::obtenerDeMemoria(int direccion, int id)
+std::string Bus::obtenerDeMemoria(int direccion)
 {
-    memoria->LeerDato(direccion);
+    return memoria->LeerDato(direccion);
 }
 
 void Bus::EscribirEnMemoria(int direccion, std::string dato)
@@ -43,17 +43,21 @@ void Bus::EscribirEnMemoria(int direccion, std::string dato)
     memoria->EscribirDato(direccion, dato);
 }
 
-void Bus::InvalidarDatoEnCaches(std::string tag)
+void Bus::InvalidarDatoEnCaches(std::string tag, int id)
 {
     for (int i = 0; i < cacheCollection.size() ; i++)
     {
-        std::string * datos = cacheCollection.at(i);
         for (int k=0; k<16; k++)
         {
-            if (datos[k].substr(3).compare(tag)==0 && datos[k].at(2)=='m')
+            if (cacheCollection.at(i)[k].substr(3).compare(tag)==0 && i!=id)
             {
-                datos[k].at(2) = 'i';
+                cacheCollection.at(i)[k].at(2) = 'i';
             }
         }
     }
+}
+
+std::vector<std::string*> Bus::GetCacheCollection()
+{
+    return cacheCollection;
 }
