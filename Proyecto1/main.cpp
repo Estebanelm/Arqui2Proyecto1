@@ -60,18 +60,18 @@ void imprimirEstado()
         int peticionDeProcesador = chipsDisponibles[i]->GetProcesador()->GetSolicitudARealizar();
         if (peticionDeProcesador == PETILEER)
         {
-            printf("Procesador %d: leer direccion %d\n", chipsDisponibles[i]->GetId(), chipsDisponibles[i]->GetProcesador()->GetDireccionAUsar());
+            printf("Procesador %d: leer direccion %d\n", chipsDisponibles[i]->GetId()+1, chipsDisponibles[i]->GetProcesador()->GetDireccionAUsar());
         }
         if (peticionDeProcesador == PETIESCRIBIR)
         {
-            printf("Procesador %d: escribir dato %d%d en direccion %d\n", chipsDisponibles[i]->GetId(), chipsDisponibles[i]->GetProcesador()->GetDatoAEscribir().at(0), chipsDisponibles[i]->GetProcesador()->GetDatoAEscribir().at(1),  chipsDisponibles[i]->GetProcesador()->GetDireccionAUsar());
+            printf("Procesador %d: escribir dato %d%d en direccion %d\n", chipsDisponibles[i]->GetId()+1, chipsDisponibles[i]->GetProcesador()->GetDatoAEscribir().at(0), chipsDisponibles[i]->GetProcesador()->GetDatoAEscribir().at(1),  chipsDisponibles[i]->GetProcesador()->GetDireccionAUsar());
         }
         if (peticionDeProcesador == PETIPROCESAR)
         {
-            printf("Procesador %d: procesar\n", chipsDisponibles[i]->GetId());
+            printf("Procesador %d: procesar\n", chipsDisponibles[i]->GetId()+1);
         }
     }
-    printf("\nCache #0\t\t\t\t\tCache #1\t\t\t\t\tCache#2\t\t\t\t\t\tCache#3\n");
+    printf("\nCache #1\t\t\t\t\tCache #2\t\t\t\t\tCache#3\t\t\t\t\t\tCache#4\n");
     printf("Add  Tag  Dato  S\t\t\t\tAdd  Tag  Dato  S\t\t\t\tAdd  Tag  Dato  S\t\t\t\tAdd  Tag  Dato  S\n");
     for (int i = 0; i<16; i++)
     {
@@ -101,7 +101,7 @@ void imprimirEstado()
     printf("Cola contencion:\n");
     for(int k = 0; k<BusBuffer::GetInstance()->procesorIdFIFO.size(); k++)
     {
-        printf("| %d | ", BusBuffer::GetInstance()->procesorIdFIFO.at(k));
+        printf("| %d | ", BusBuffer::GetInstance()->procesorIdFIFO.at(k)+1);
     }
     printf("\n");
 }

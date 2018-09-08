@@ -32,8 +32,8 @@ std::string Control::ObtenerDeMemoria(int direccion, int id)
     pthread_mutex_unlock(&BusBuffer::GetInstance()->mutex);
     if (BusBuffer::GetInstance()->procesorIdFIFO.front() == id && BusBuffer::GetInstance()->sinUso)
     {
-        esperandoBus = false;
         BusBuffer::GetInstance()->sinUso = false;
+        esperandoBus = false;
         BusBuffer::GetInstance()->procesorIdFIFO.erase(BusBuffer::GetInstance()->procesorIdFIFO.begin());
         return bus->obtenerDeMemoria(direccion);
     }
@@ -54,8 +54,8 @@ bool Control::EscribirEnMemoria(int direccion, std::string dato, int id)
     pthread_mutex_unlock(&BusBuffer::GetInstance()->mutex);
     if (BusBuffer::GetInstance()->procesorIdFIFO.front() == id && BusBuffer::GetInstance()->sinUso)
     {
-        esperandoBus = false;
         BusBuffer::GetInstance()->sinUso = false;
+        esperandoBus = false;
         BusBuffer::GetInstance()->procesorIdFIFO.erase(BusBuffer::GetInstance()->procesorIdFIFO.begin());
         bus->InvalidarDatoEnCaches(std::to_string(direccion), id);
         bus->EscribirEnMemoria(direccion, dato);

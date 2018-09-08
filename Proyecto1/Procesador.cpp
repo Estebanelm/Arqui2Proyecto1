@@ -28,8 +28,8 @@ void Procesador::EnviarPeticion()
     {
         direccionAUsar = rand() % NUMEROBLOQUES;
         datoAEscribir = "";
-        datoAEscribir.push_back(rand() % 10);
-        datoAEscribir.push_back(rand() % 9);
+        datoAEscribir.push_back(0);
+        datoAEscribir.push_back(id+1);
         solicitudARealizar = rand() % 3;
     }
     if (solicitudARealizar == PETILEER)
